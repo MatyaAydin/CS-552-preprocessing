@@ -1,7 +1,6 @@
 from mistralai import Mistral
+from MISTRAL_KEY import api_key
 
-
-api_key = ":("
 
 client = Mistral(api_key=api_key)
 
