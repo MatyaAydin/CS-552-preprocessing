@@ -28,41 +28,47 @@ response = client.ocr.process(
 
 
 
-def parse_qa_string(input_string, question_number):
-    current_marker = f'Question {question_number}'
-    next_marker = f'Question {question_number + 1}'
+def parse_qa_string(input_string):
+    result = {"questions": [], "solutions": []}
+    question_number = 1
     
-    start_idx = input_string.find(current_marker)
-    end_idx = input_string.find(next_marker)
+    while True:
+        current_marker = f'Question {question_number}'
+        next_marker = f'Question {question_number + 1}'
+        
+        start_idx = input_string.find(current_marker)
+        if start_idx == -1:
+            break  # No more questions found
+        
+        end_idx = input_string.find(next_marker)
+        if end_idx != -1:
+            question_block = input_string[start_idx:end_idx]
+        else:
+            question_block = input_string[start_idx:]  # Last question
+
+        # Clean and parse the current block
+        question_block = question_block.split(' ', 2)[-1]  # Remove "Question X"
+        
+        if 'Solution:' in question_block:
+            question_part, solution_part = question_block.split('Solution:', 1)
+            question = question_part.strip()
+            solution = solution_part.strip()
+
+            result["questions"].append(question)
+            result["solutions"].append(solution)
+            
+        else:
+            raise ValueError(f"Question {question_number} does not contain 'Solution:' keyword.")
+        
+        question_number += 1
     
-    if start_idx == -1:
-        raise ValueError(f"Could not find '{current_marker}' in the input.")
-    
-    # Slice between current and next question (or end of string)
-    if end_idx != -1:
-        question_block = input_string[start_idx:end_idx]
-    else:
-        question_block = input_string[start_idx:]
-    
-    # Remove the "Question X" prefix
-    question_block = question_block.split(' ', 2)[-1]
-    
-    # Split into question and solution
-    if 'Solution:' in question_block:
-        question_part, solution_part = question_block.split('Solution:', 1)
-        question = question_part.strip()
-        solution = solution_part.strip()
-        return {
-            "question": question,
-            "solution": solution
-        }
-    else:
-        raise ValueError("Input string does not contain 'Solution:' keyword.")
+    return result
 
     
-qa = parse_qa_string(response.pages[0].markdown, 1)
+qa = parse_qa_string(response.pages[0].markdown)
 
-print("###QUESTION###")
-print(qa['question'])
-print("###SOLUTION###")
-print(qa['solution'])
+
+for i in range(len(qa["questions"])):
+    print(f"Question {i+1}: {qa['questions'][i]}")
+    print(f"Solution {i+1}: {qa['solutions'][i]}")
+    print("\n")
