@@ -43,8 +43,7 @@ def get_wikipedia_summary(subject_name, language='en'):
     else:
         return f"No summary available for '{subject_name}'."
 
-# Example usage
-if __name__ == "__main__":
-    subject = input("Choose a subject: ")
-    desc = get_wikipedia_summary(subject)
-    print(desc)
+
+subject = input("Choose a subject: ")
+desc = get_wikipedia_summary(subject)
+print(desc)
