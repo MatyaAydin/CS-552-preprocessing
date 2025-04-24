@@ -16,6 +16,9 @@ To load `Llama-3.2-1B`, you must agree with the EULA on https://huggingface.co/m
 api_key = "YOURKEY"
 ```
 
+_Note_: Create a write key, otherwise it does not work ![alt text](image.png)
+
+
 Similarly, you can do the same with Mistral key.
 
 ### Repo structure
