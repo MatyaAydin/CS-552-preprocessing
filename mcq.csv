@@ -1,0 +1,37 @@
+questions,solutions
+"Consider the equations for a standard LSTM cell:
+
+$$
+\begin{aligned}
+& i_{t}=\sigma\left(W_{i x} x_{t}+W_{i h} h_{t-1}+b_{i}\right) \\
+& f_{t}=\sigma\left(W_{f x} x_{t}+W_{f h} h_{t-1}+b_{f}\right) \\
+& o_{t}=\sigma\left(W_{o x} x_{t}+W_{o h} h_{t-1}+b_{o}\right) \\
+& \tilde{c}_{t}=\phi\left(W_{c x} x_{t}+W_{c h} h_{t-1}+b_{c}\right) \\
+& c_{t}=f_{t} \odot c_{t-1}+i_{t} \odot \tilde{c}_{t} \\
+& h_{t}=o_{t} \odot \phi\left(c_{t}\right)
+\end{aligned}
+$$
+
+In the equations above, which term explicitly represents the memory component that enables the LSTM to retain long-term information across timesteps?
+
+Output gate $o_{t}$
+Hidden state $h_{t}$
+Cell state $c_{t}$
+Candidate cell state $\tilde{c}_{t}$
+Input gate $i_{t}$",The cell state $c_{t}$ retains long-term information while the hidden state $h_{t}$ acts as a short-term memory.
+"BERT introduces a special token, [CLS], at the beginning of every input sequence. Which of the following statements best describes the purpose of the [CLS] token?
+
+It serves as a placeholder whose final hidden representation acts as a holistic sequence-level embedding, typically used for classification or next-sentence prediction tasks.
+
+It serves primarily to separate multiple sentences within the same input (the same role as [SEP] does).
+$\square$ It simply marks sentence boundaries and carries no trainable embeddings of its own.
+$\square$ It marks the exact midpoint of the input sequence to ensure balanced bidirectional attention.
+$\square$ It is used only during masked language modeling and is dropped for downstream tasks.",The [CLS] special token is introduced to aggregate information about the entire sequence in its embedding and is used as input to a classification model.
+"From the following set of models: \{ELMo, BERT, GPT, BART, T5\}, which group can each be directly used for both classification and generation tasks (without any modifications)?
+
+# ELMo, BERT 
+
+$\square$ BERT, GPT
+$\square$ BART, T5
+$\square$ BERT, GPT, T5
+ELMo, BART, GPT","BART and T5 are encoder-decoder models capable of both classification and text generation. GPT also supports both tasks; however, in this question, it is always paired with bidirectional models like BERT and ELMo, which are not suitable for generation."

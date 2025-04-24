@@ -1,5 +1,6 @@
 from mistralai import Mistral
 from keys.MISTRAL_KEY import api_key
+import pandas as pd
 
 
 client = Mistral(api_key=api_key)
@@ -38,16 +39,16 @@ def parse_qa_string(input_string):
         
         start_idx = input_string.find(current_marker)
         if start_idx == -1:
-            break  # No more questions found
+            break
         
         end_idx = input_string.find(next_marker)
         if end_idx != -1:
             question_block = input_string[start_idx:end_idx]
         else:
-            question_block = input_string[start_idx:]  # Last question
+            question_block = input_string[start_idx:]
 
-        # Clean and parse the current block
-        question_block = question_block.split(' ', 2)[-1]  # Remove "Question X"
+
+        question_block = question_block.split(' ', 2)[-1] 
         
         if 'Solution:' in question_block:
             question_part, solution_part = question_block.split('Solution:', 1)
@@ -64,11 +65,10 @@ def parse_qa_string(input_string):
     
     return result
 
-    
+
+
 qa = parse_qa_string(response.pages[0].markdown)
+df = pd.DataFrame(qa)
+df.to_csv("mcq.csv", index=False)
 
 
-for i in range(len(qa["questions"])):
-    print(f"Question {i+1}: {qa['questions'][i]}")
-    print(f"Solution {i+1}: {qa['solutions'][i]}")
-    print("\n")

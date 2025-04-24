@@ -17,3 +17,12 @@ api_key = "YOURKEY"
 ```
 
 Similarly, you can do the same with Mistral key.
+
+### Repo structure
+
+* `WS_wikipedia.py`: extract short descriptions about subjects using wikipedia and wikidata. Will be used for the external knowledge of the RAG model.
+
+* `preprocess_mcq.py`: turns an EPFL MCQ exam into a csv with questions-solutions pairs.
+**TODO**: extract choices from questions and correct answer from solution, hangle images
+
+* `tryOllama.ipynb`: Attempt to load Llama, you can ignore this
