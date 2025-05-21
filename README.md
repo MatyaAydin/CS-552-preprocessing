@@ -11,13 +11,6 @@ To get all necessary packages, run the following command
 pip install -r requirements.txt
 ```
 
-To load `Llama-3.2-1B`, you must agree with the EULA on https://huggingface.co/meta-llama/Llama-3.2-1B. Once this is done, you must create a token on hugging face to authentify when loading the model. The key must be in the file `./keys/HF_KEY.py` with the variable
-```python
-api_key = "YOURKEY"
-```
-
-_Note_: Create a write key, otherwise it does not work ![alt text](image.png)
-
 
 Similarly, you can do the same with Mistral key.
 
@@ -27,5 +20,3 @@ Similarly, you can do the same with Mistral key.
 
 * `preprocess_mcq.py`: turns an EPFL MCQ exam into a csv with questions-solutions pairs.
 **TODO**: extract choices from questions and correct answer from solution, hangle images
-
-* `tryOllama.ipynb`: Attempt to load Llama, you can ignore this
